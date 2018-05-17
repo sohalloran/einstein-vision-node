@@ -18,28 +18,28 @@ class App extends Component {
     uploadError: null,
     uploadResponse: null
   }
+  componentDidMount() {
+    this.updateCanvas();
+  }
+  updateCanvas() {
+      const context = this.refs.canvas.getContext('2d');
+      var img=document.getElementById("my-image");
+      context.drawImage(img,10,10);  
+      context.beginPath();
+      context.rect(188, 50, 200, 100);
+      context.fillStyle = 'yellow';
+      context.fill();
+      context.lineWidth = 7;
+      context.strokeStyle = 'black';
+      context.stroke();
 
+  }
   render() {
     const file = this.state.files[0];
     const uploadError = this.state.uploadError;
     const isProcessing = this.state.isProcessing;
     const response = this.state.uploadResponse;
     const predictions = (response && response.probabilities) || [];
-
-    var c=document.getElementById("myCanvas");
-    var ctx=c.getContext("2d");
-    var img=document.getElementById("my-image");
-    ctx.drawImage(img,10,10);  
-    var canvas = document.getElementById('myCanvas');
-          var context = canvas.getContext('2d');
-    
-          context.beginPath();
-          context.rect(188, 50, 200, 100);
-          context.fillStyle = 'yellow';
-          context.fill();
-          context.lineWidth = 7;
-          context.strokeStyle = 'black';
-          context.stroke();
 
     return (
       <div>
@@ -100,7 +100,7 @@ class App extends Component {
                     :null}
                 </div>
               </div>
-            <canvas id="myCanvas" width="500" height="500" />
+            <canvas ref="canvas" width="500" height="500" />
             <Predictions contents={predictions}/>
           </div>
           </Dropzone>
