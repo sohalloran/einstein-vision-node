@@ -96,11 +96,11 @@ class App extends Component {
                     :null}
                 </div>
               </div>
-            <canvas ref="canvas"/>
+            
             <Predictions contents={predictions}/>
           </div>
           </Dropzone>
-
+          <canvas ref="canvas"/>
         </div>
 
         <div className="footer">
