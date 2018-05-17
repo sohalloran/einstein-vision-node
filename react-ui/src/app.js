@@ -23,7 +23,7 @@ class App extends Component {
   }
   updateCanvas() {
       const context = this.refs.canvas.getContext('2d');
-      context.drawImage({file && file.preview},500,500);  
+      context.drawImage(file,500,500);  
       context.beginPath();
       context.rect(188, 50, 200, 100);
       context.fillStyle = 'yellow';
