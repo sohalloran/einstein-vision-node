@@ -62,11 +62,12 @@ class App extends Component {
               activeClassName="dropzone-active"
               rejectClassName="dropzone-reject">
           <div className="result-wrapper">
+              <canvas id="c"></canvas>
               <div className={classNames(
                 'image-preview',
                 file != null ? 'image-preview-visible' : null)}>
                 
-                {isProcessing || response ? <img
+                {isProcessing || response ? <img id="my-image"
                   alt="Upload preview"
                   src={file && file.preview}
                   style={{ display: 'block' }}/> : null}
