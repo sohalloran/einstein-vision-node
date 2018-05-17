@@ -47,7 +47,7 @@ class App extends Component {
           var maxY = (boundingBox.maxY * hRatio) - minY; 
           context.beginPath();
           context.rect(minX, minY, maxX, maxY);
-          context.lineWidth = 1;
+          context.lineWidth = 2;
           context.strokeStyle = 'yellow';
           context.stroke();
         }      
@@ -128,7 +128,7 @@ class App extends Component {
             <Predictions contents={predictions}/>
           </div>
           </Dropzone>
-          <canvas ref="canvas" style="display:block"/>
+          <canvas ref="canvas" width="400px" height="400px"/>
         </div>
 
         <div className="footer">
