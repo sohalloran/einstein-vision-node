@@ -26,10 +26,14 @@ class App extends Component {
       const file = this.state.files[0];
       img.src = file && file.preview;
       const context = this.refs.canvas.getContext('2d');
+      this.refs.canvas.width = window.innerWidth;
+      this.refs.canvas.height = window.innerHeight;
       //context.drawImage(img, 0, 0); 
+      img.onload = function() {
+        context.drawImage(img, 0, 0,window.innerWidth,window.innerHeight);
+      };      
       context.drawImage(img, 0, 0, img.width, img.height, 0, 0, this.refs.canvas.width, this.refs.canvas.height);
       context.beginPath();
-            
       for(var i=0;i<predictions.length;i++) {
         var boundingBox = predictions[i].boundingBox;
         var minX = boundingBox.minX;
@@ -37,7 +41,6 @@ class App extends Component {
         var maxX = boundingBox.maxX;
         var maxY = boundingBox.maxY; 
         context.rect(minX, minY, maxX, maxY);
-        console.log(minX);
       }
       context.lineWidth = 2;
       context.strokeStyle = 'yellow';
