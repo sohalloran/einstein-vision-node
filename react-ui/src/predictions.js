@@ -46,7 +46,7 @@ class Predictions extends Component {
                 color: color,
                 backgroundColor: `rgba(0,119,187,${probability})`
               })}>
-              <h2>{labels[0]} ({minX},{minX})->({maxX},{maxY}) <span className="probability" title="Probability">{percent}%</span></h2>
+              <h2>{labels[0]} ({minX},{minX}),({maxX},{maxY}) <span className="probability" title="Probability">{percent}%</span></h2>
               {labels[1] != null
                 ? <p className="alt-labels">{labels.slice(1, labels.length).join(', ')}</p>
                 : null}
