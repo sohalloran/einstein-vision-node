@@ -23,7 +23,7 @@ class App extends Component {
   }
   updateCanvas() {
       const context = this.refs.canvas.getContext('2d');
-      const img = this.refs.getElementById("my-image")
+      const img = this.refs.img;
       context.drawImage(img,10,10);  
       context.beginPath();
       context.rect(188, 50, 200, 100);
