@@ -20,7 +20,8 @@ class App extends Component {
   }
   updateCanvas() {
       var img = new Image();
-      img.src = this.state.files[0];
+      const file = this.state.files[0];
+      img.src = file && file.preview;
       const context = this.refs.canvas.getContext('2d');
       context.drawImage(img, 0, 0); 
   }
