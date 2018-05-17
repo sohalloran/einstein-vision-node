@@ -33,6 +33,11 @@ class Predictions extends Component {
             const probability = prediction.probability;
             const percent = Math.round(probability * 100);
             const labels = prediction.label.split(/,\s*/);
+            const boundingBox = prediction.boundingBox;
+            const minX = boundingBox.minX;
+            const minY = boundingBox.minY;
+            const maxX = boundingBox.maxX;
+            const maxY = boundingBox.maxY;
             let color = '#fff';
             if (probability < .5) color = '#777';
             return (<div 
@@ -42,7 +47,7 @@ class Predictions extends Component {
                 color: color,
                 backgroundColor: `rgba(0,119,187,${probability})`
               })}>
-              <h2>{labels[0]} <span className="probability" title="Probability">{percent}%</span></h2>
+              <h2>{labels[0]} ({minX},{minX})->({maxX},{maxY}) <span className="probability" title="Probability">{percent}%</span></h2>
               {labels[1] != null
                 ? <p className="alt-labels">{labels.slice(1, labels.length).join(', ')}</p>
                 : null}
