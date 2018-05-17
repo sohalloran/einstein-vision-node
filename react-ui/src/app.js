@@ -30,19 +30,21 @@ class App extends Component {
       //this.refs.canvas.height = window.innerHeight;
       //context.drawImage(img, 0, 0); 
       var height = window.innerHeight;
-      var ratio = canvas.width/canvas.height;
+      var ratio = this.refs.canvas.width/canvas.height;
       var width = height * ratio;
       this.refs.canvas.style.width = width+'px';
       this.refs.canvas.style.height = height+'px';
   
       img.onload = function() {
         context.drawImage(img, 0, 0,width,height);
+        var wRatio = width / img.width;
+        var hRatio = height / img.height; 
         for(var i=0;i<predictions.length;i++) {
           var boundingBox = predictions[i].boundingBox;
-          var minX = boundingBox.minX;
-          var minY = boundingBox.minY;
-          var maxX = boundingBox.maxX - minX;
-          var maxY = boundingBox.maxY - minY; 
+          var minX = boundingBox.minX * wRatio;
+          var minY = boundingBox.minY * hRatio;
+          var maxX = (boundingBox.maxX * wRatio) - minX;
+          var maxY = (boundingBox.maxY * hRatio) - minY; 
           context.beginPath();
           context.rect(minX, minY, maxX, maxY);
           context.lineWidth = 2;
