@@ -34,17 +34,25 @@ class App extends Component {
       };      
       //context.drawImage(img, 0, 0, img.width, img.height, 0, 0, this.refs.canvas.width, this.refs.canvas.height);
       context.beginPath();
+      var myRect = [];
       for(var i=0;i<predictions.length;i++) {
         var boundingBox = predictions[i].boundingBox;
         var minX = boundingBox.minX;
         var minY = boundingBox.minY;
         var maxX = boundingBox.maxX;
         var maxY = boundingBox.maxY; 
-        context.rect(minX, minY, maxX, maxY);
+        myRect.push(new Shape(minX, minY, maxX, maxY, "#333"));
+        //context.rect(minX, minY, maxX, maxY);
       }
-      context.lineWidth = 2;
-      context.strokeStyle = 'yellow';
-      context.stroke();
+      for (var i in myRect) {
+        var oRec = myRect[i];
+        context.rect(oRec.x, oRec.y, oRec.w, oRec.h);
+        context.lineWidth = 2;
+        context.strokeStyle = 'yellow';
+        context.stroke();
+
+    }      
+
   }
   render() {
     const file = this.state.files[0];
