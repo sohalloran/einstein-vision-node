@@ -7,13 +7,6 @@ class Predictions extends Component {
     // The Predictive Vision Predictions
     contents: React.PropTypes.array.isRequired
   }
-  componentDidMount() {
-    this.updateCanvas();
-}
-updateCanvas() {
-    const ctx = this.refs.canvas.getContext('2d');
-    ctx.fillRect(0,0, 100, 100);
-}
   render() {
     const contents = this.props.contents;
     if (contents == null || contents.length === 0) {
@@ -60,7 +53,6 @@ updateCanvas() {
               
             </div>);
           })}
-                  <canvas ref="canvas" width="300" height="300"/>
         </div>
       }
     </StaggeredMotion>
