@@ -7,6 +7,7 @@ import './app.css';
 import Spinner from './spinner';
 import Predictions from './predictions';
 import UploadTarget from './upload-target';
+import Fabric from './fabric';
 
 class App extends Component {
 
