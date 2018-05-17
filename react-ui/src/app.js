@@ -29,10 +29,9 @@ class App extends Component {
       //context.drawImage(img, 0, 0); 
       context.drawImage(img, 0, 0, img.width, img.height, 0, 0, this.refs.canvas.width, this.refs.canvas.height);
       context.beginPath();
-      console.log(predictions);
+      console.log(predictions);      
       for(var i=0;i<predictions.length;i++) {
-        var prediction = predictions[i];
-        var boundingBox = prediction.boundingBox;
+        var boundingBox = predictions[i].boundingBox;
         var minX = boundingBox.minX;
         var minY = boundingBox.minY;
         var maxX = boundingBox.maxX;
