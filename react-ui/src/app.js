@@ -30,7 +30,7 @@ class App extends Component {
       this.refs.canvas.height = window.innerHeight;
       //context.drawImage(img, 0, 0); 
       img.onload = function() {
-        context.drawImage(img, 0, 0,window.innerWidth,window.innerHeight);
+        context.drawImage(img, 0, 0);
         for(var i=0;i<predictions.length;i++) {
           var boundingBox = predictions[i].boundingBox;
           var minX = boundingBox.minX;
