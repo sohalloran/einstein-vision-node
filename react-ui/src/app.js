@@ -29,9 +29,14 @@ class App extends Component {
       //this.refs.canvas.width = window.innerWidth;
       //this.refs.canvas.height = window.innerHeight;
       //context.drawImage(img, 0, 0); 
-
+      var height = window.innerHeight;
+      var ratio = canvas.width/canvas.height;
+      var width = height * ratio;
+      this.refs.canvas.style.width = width+'px';
+      this.refs.canvas.style.height = height+'px';
+  
       img.onload = function() {
-        context.drawImage(img, 0, 0,this.refs.canvas.width,this.refs.canvas.height));
+        context.drawImage(img, 0, 0,width,height));
         for(var i=0;i<predictions.length;i++) {
           var boundingBox = predictions[i].boundingBox;
           var minX = boundingBox.minX;
@@ -121,7 +126,7 @@ class App extends Component {
             <Predictions contents={predictions}/>
           </div>
           </Dropzone>
-          <canvas ref="canvas" style="position:relative;"/>
+          <canvas ref="canvas" width="300" height="400"/>
         </div>
 
         <div className="footer">
