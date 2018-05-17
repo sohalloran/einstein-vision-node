@@ -124,11 +124,11 @@ class App extends Component {
                     :null}
                 </div>
               </div>
-            
+              <canvas ref="canvas" width="400px" height="400px"/>      
             <Predictions contents={predictions}/>
           </div>
           </Dropzone>
-          <canvas ref="canvas" width="400px" height="400px"/>
+          
         </div>
 
         <div className="footer">
