@@ -27,7 +27,8 @@ class App extends Component {
       context.drawImage(img, 0, 0, img.width, img.height, 0, 0, this.refs.canvas.width, this.refs.canvas.height);
       context.beginPath();
       context.rect(188, 50, 200, 100);
-      context.lineWidth = 7;
+      context.rect(18, 5, 20, 10);
+      context.lineWidth = 2;
       context.strokeStyle = 'yellow';
       context.stroke();
   }
