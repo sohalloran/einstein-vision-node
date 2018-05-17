@@ -128,7 +128,7 @@ class App extends Component {
             <Predictions contents={predictions}/>
           </div>
           </Dropzone>
-          <div class="image-preview image-preview-visible">
+          <div className="image-preview image-preview-visible">
             <canvas ref="canvas" style="display:block"/>
           </div>
         </div>
