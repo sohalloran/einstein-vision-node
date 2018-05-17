@@ -128,10 +128,8 @@ class App extends Component {
             <Predictions contents={predictions}/>
           </div>
           </Dropzone>
-          <div className={classNames(
-                'image-preview',
-                file != null ? 'image-preview-visible' : null)}>
-          <canvas ref="canvas" style="display:block"/>
+          <div className="image-preview image-preview-visible">
+            <canvas ref="canvas" style="display:block"/>
           </div>
         </div>
 
