@@ -8,6 +8,7 @@ import './app.css';
 import Spinner from './spinner';
 import Predictions from './predictions';
 import UploadTarget from './upload-target';
+import CanvasComponent from './CanvasComponent';
 
 class App extends Component {
 
@@ -63,7 +64,7 @@ class App extends Component {
               activeClassName="dropzone-active"
               rejectClassName="dropzone-reject">
           <div className="result-wrapper">
-              <canvas id="c"></canvas>
+              
               <div className={classNames(
                 'image-preview',
                 file != null ? 'image-preview-visible' : null)}>
@@ -88,6 +89,7 @@ class App extends Component {
             <Predictions contents={predictions}/>
           </div>
           </Dropzone>
+
         </div>
 
         <div className="footer">
