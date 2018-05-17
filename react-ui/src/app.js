@@ -47,7 +47,7 @@ class App extends Component {
           var maxY = (boundingBox.maxY * hRatio) - minY; 
           context.beginPath();
           context.rect(minX, minY, maxX, maxY);
-          context.lineWidth = 2;
+          context.lineWidth = 1;
           context.strokeStyle = 'yellow';
           context.stroke();
         }      
