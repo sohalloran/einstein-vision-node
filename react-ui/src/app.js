@@ -2,12 +2,12 @@ import React, { Component } from 'react';
 import Dropzone from 'react-dropzone';
 import classNames from 'classnames';
 import superagent from 'superagent';
+import Fabric from 'fabric';
 
 import './app.css';
 import Spinner from './spinner';
 import Predictions from './predictions';
 import UploadTarget from './upload-target';
-import Fabric from './fabric';
 
 class App extends Component {
 
