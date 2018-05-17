@@ -35,8 +35,8 @@ class App extends Component {
           var boundingBox = predictions[i].boundingBox;
           var minX = boundingBox.minX;
           var minY = boundingBox.minY;
-          var maxX = boundingBox.maxX;
-          var maxY = boundingBox.maxY; 
+          var maxX = boundingBox.maxX - minX;
+          var maxY = boundingBox.maxY - minY; 
           context.beginPath();
           context.rect(minX, minY, maxX, maxY);
           context.lineWidth = 2;
