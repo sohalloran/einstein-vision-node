@@ -23,7 +23,8 @@ class App extends Component {
       const file = this.state.files[0];
       img.src = file && file.preview;
       const context = this.refs.canvas.getContext('2d');
-      context.drawImage(img, 0, 0); 
+      //context.drawImage(img, 0, 0); 
+      context.drawImage(img, 0, 0, img.width, img.height, 0, 0, this.refs.canvas.width, this.refs.canvas.height);
       context.beginPath();
       context.rect(188, 50, 200, 100);
       context.lineWidth = 7;
