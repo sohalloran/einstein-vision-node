@@ -32,7 +32,7 @@ class App extends Component {
       img.onload = function() {
         context.drawImage(img, 0, 0,window.innerWidth,window.innerHeight);
       };      
-      context.drawImage(img, 0, 0, img.width, img.height, 0, 0, this.refs.canvas.width, this.refs.canvas.height);
+      //context.drawImage(img, 0, 0, img.width, img.height, 0, 0, this.refs.canvas.width, this.refs.canvas.height);
       context.beginPath();
       for(var i=0;i<predictions.length;i++) {
         var boundingBox = predictions[i].boundingBox;
