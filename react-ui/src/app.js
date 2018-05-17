@@ -28,8 +28,8 @@ class App extends Component {
       <div>
         <div className="title">
           <h1 className="intro">
-             Einstein Vision Demo
-             <div className="detail">of the General Image Classifier</div>
+             BAT Einstein Object Detection Demo
+             <div className="detail"></div>
           </h1>
         </div>
         <div className={classNames(
