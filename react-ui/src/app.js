@@ -19,6 +19,7 @@ class App extends Component {
     uploadResponse: null
   }
   updateCanvas() {
+      const response = this.state.uploadResponse;
       const predictions = (response && response.probabilities) || [];
      
       var img = new Image();
