@@ -100,7 +100,7 @@ class App extends Component {
                     :null}
                 </div>
               </div>
-            <canvas id="myCanvas" width="500" height="500" >
+            <canvas id="myCanvas" width="500" height="500" />
             <Predictions contents={predictions}/>
           </div>
           </Dropzone>
