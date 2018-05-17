@@ -123,8 +123,9 @@ class App extends Component {
                     ? uploadError
                     :null}
                 </div>
+                <canvas ref="canvas" width="400px" height="400px"/> 
               </div>
-              <canvas ref="canvas" width="400px" height="400px"/>      
+                   
             <Predictions contents={predictions}/>
           </div>
           </Dropzone>
