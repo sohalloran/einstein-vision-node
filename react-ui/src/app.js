@@ -18,22 +18,11 @@ class App extends Component {
     uploadError: null,
     uploadResponse: null
   }
-  componentDidMount() {
-    this.updateCanvas();
-  }
   updateCanvas() {
       var img = new Image();
       img.src = this.state.files[0];
       const context = this.refs.canvas.getContext('2d');
       context.drawImage(img, 0, 0); 
-      context.beginPath();
-      context.rect(188, 50, 200, 100);
-      context.fillStyle = 'yellow';
-      context.fill();
-      context.lineWidth = 7;
-      context.strokeStyle = 'black';
-      context.stroke();
-
   }
   render() {
     const file = this.state.files[0];
@@ -138,6 +127,7 @@ class App extends Component {
           return;
         }
         console.log('file-upload response', res);
+        this.updateCanvas();
         this.setState({ uploadResponse: JSON.parse(res.text) });
       });
     }
