@@ -22,8 +22,9 @@ class App extends Component {
     this.updateCanvas();
   }
   updateCanvas() {
-      const context = this.refs.canvas.getContext('2d');
-      context.drawImage(file,500,500);  
+      const context = this.refs.canvas.getContext('2d');]
+      const img = this.refs.canvas.getContext('2d');
+      context.drawImage(img,10,10);  
       context.beginPath();
       context.rect(188, 50, 200, 100);
       context.fillStyle = 'yellow';
@@ -83,7 +84,7 @@ class App extends Component {
                 'image-preview',
                 file != null ? 'image-preview-visible' : null)}>
                 
-                {isProcessing || response ? <img id="my-image"
+                {isProcessing || response ? <img ref="img" id="my-image"
                   alt="Upload preview"
                   src={file && file.preview}
                   style={{ display: 'block' }}/> : null}
