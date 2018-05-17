@@ -30,7 +30,7 @@ class App extends Component {
       //this.refs.canvas.height = window.innerHeight;
       //context.drawImage(img, 0, 0); 
       var height = window.innerHeight;
-      var ratio = this.refs.canvas.width/canvas.height;
+      var ratio = this.refs.canvas.width/this.refs.canvas.height;
       var width = height * ratio;
       this.refs.canvas.style.width = width+'px';
       this.refs.canvas.style.height = height+'px';
