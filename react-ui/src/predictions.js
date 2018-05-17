@@ -60,8 +60,8 @@ updateCanvas() {
               
             </div>);
           })}
+                  <canvas ref="canvas" width="300" height="300"/>
         </div>
-        <canvas ref="canvas" width={300} height={300}/>
       }
     </StaggeredMotion>
     
