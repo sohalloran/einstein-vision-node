@@ -31,22 +31,22 @@ class App extends Component {
       //context.drawImage(img, 0, 0); 
       img.onload = function() {
         context.drawImage(img, 0, 0,window.innerWidth,window.innerHeight);
+        for(var i=0;i<predictions.length;i++) {
+          var boundingBox = predictions[i].boundingBox;
+          var minX = boundingBox.minX;
+          var minY = boundingBox.minY;
+          var maxX = boundingBox.maxX;
+          var maxY = boundingBox.maxY; 
+          context.beginPath();
+          context.rect(minX, minY, maxX, maxY);
+          context.lineWidth = 2;
+          context.strokeStyle = 'yellow';
+          context.stroke();
+        }      
       };      
       //context.drawImage(img, 0, 0, img.width, img.height, 0, 0, this.refs.canvas.width, this.refs.canvas.height);
       
       
-      for(var i=0;i<predictions.length;i++) {
-        var boundingBox = predictions[i].boundingBox;
-        var minX = boundingBox.minX;
-        var minY = boundingBox.minY;
-        var maxX = boundingBox.maxX;
-        var maxY = boundingBox.maxY; 
-        context.beginPath();
-        context.rect(minX, minY, maxX, maxY);
-        context.lineWidth = 2;
-        context.strokeStyle = 'yellow';
-        context.stroke();
-      }
   }
   render() {
     const file = this.state.files[0];
