@@ -36,7 +36,7 @@ class App extends Component {
       this.refs.canvas.style.height = height+'px';
   
       img.onload = function() {
-        context.drawImage(img, 0, 0,width,height));
+        context.drawImage(img, 0, 0,width,height);
         for(var i=0;i<predictions.length;i++) {
           var boundingBox = predictions[i].boundingBox;
           var minX = boundingBox.minX;
