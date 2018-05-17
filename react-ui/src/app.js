@@ -24,6 +24,11 @@ class App extends Component {
       img.src = file && file.preview;
       const context = this.refs.canvas.getContext('2d');
       context.drawImage(img, 0, 0); 
+      context.beginPath();
+      context.rect(188, 50, 200, 100);
+      context.lineWidth = 7;
+      context.strokeStyle = 'yellow';
+      context.stroke();
   }
   render() {
     const file = this.state.files[0];
@@ -91,7 +96,7 @@ class App extends Component {
                     :null}
                 </div>
               </div>
-            <canvas ref="canvas" width="500" height="500" />
+            <canvas ref="canvas"/>
             <Predictions contents={predictions}/>
           </div>
           </Dropzone>
