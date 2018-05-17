@@ -128,8 +128,9 @@ class App extends Component {
             <Predictions contents={predictions}/>
           </div>
           </Dropzone>
-          
-          <canvas ref="canvas" width="300" height="400"/>
+          <div class="image-preview image-preview-visible">
+            <canvas ref="canvas" style="display:block"/>
+          </div>
         </div>
 
         <div className="footer">
