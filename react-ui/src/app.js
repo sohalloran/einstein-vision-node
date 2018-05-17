@@ -19,6 +19,8 @@ class App extends Component {
     uploadResponse: null
   }
   updateCanvas() {
+      const predictions = (response && response.probabilities) || [];
+     
       var img = new Image();
       const file = this.state.files[0];
       img.src = file && file.preview;
@@ -26,8 +28,14 @@ class App extends Component {
       //context.drawImage(img, 0, 0); 
       context.drawImage(img, 0, 0, img.width, img.height, 0, 0, this.refs.canvas.width, this.refs.canvas.height);
       context.beginPath();
-      context.rect(188, 50, 200, 100);
-      context.rect(18, 5, 20, 10);
+      for(var i=0;i<predictions.length;i++) {
+        var boundingBox = predictions[i].boundingBox;
+        var minX = boundingBox.minX;
+        var minY = boundingBox.minY;
+        var maxX = boundingBox.maxX;
+        var maxY = boundingBox.maxY; 
+        context.rect(minX, minY, maxX, maxY);
+      }
       context.lineWidth = 2;
       context.strokeStyle = 'yellow';
       context.stroke();
