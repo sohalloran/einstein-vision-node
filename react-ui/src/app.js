@@ -20,7 +20,7 @@ class App extends Component {
   }
   updateCanvas() {
       const response = this.state.uploadResponse;
-      const predictions = (response && response.probabilities) || [];
+      const predictions = response.probabilities;
      
       var img = new Image();
       const file = this.state.files[0];
@@ -145,8 +145,9 @@ class App extends Component {
           return;
         }
         console.log('file-upload response', res);
-        this.updateCanvas();
+        
         this.setState({ uploadResponse: JSON.parse(res.text) });
+        this.updateCanvas();
       });
     }
   }
