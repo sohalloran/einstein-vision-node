@@ -20,7 +20,9 @@ class Predictions extends Component {
     if (contents == null || contents.length === 0) {
       return <div className = "empty" / > ;
     }
-
+    handleClick: function (minX) {
+      alert(minX);
+    }
     return ( < StaggeredMotion defaultStyles = {
         contents.map(p => ({
           maxHeight: 0
@@ -56,9 +58,7 @@ class Predictions extends Component {
               if (probability < .5) color = '#777';
               return ( < div className = 'prediction'
                 onClick = {
-                  () => {
-                    alert(minX);
-                  }
+                  this.handleClick.bind(null, minX)
                 }
                 key = {
                   `prediction-${i}`
