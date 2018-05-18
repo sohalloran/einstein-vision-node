@@ -12,7 +12,7 @@ class Predictions extends Component {
     // The Predictive Vision Predictions
     contents: React.PropTypes.array.isRequired
   }
-  highlight(minX, minY, maxX, maxY, e) = {
+  highlight(minX, minY, maxX, maxY) = {
     console.log(minX, minY, maxX, maxY);
   }
   render() {
@@ -55,7 +55,7 @@ class Predictions extends Component {
               let color = '#fff';
               if (probability < .5) color = '#777';
               return ( < div onClick = {
-                  (e) => this.highlight(minX, minY, maxX, maxY, e)
+                  this.highlight(minX, minY, maxX, maxY)
                 }
                 className = 'prediction'
                 key = {
