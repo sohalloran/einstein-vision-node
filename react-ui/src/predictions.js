@@ -56,7 +56,9 @@ class Predictions extends Component {
               if (probability < .5) color = '#777';
               return ( < div className = 'prediction'
                 onClick = {
-                  alert(minX);
+                  () => {
+                    alert(minX);
+                  }
                 }
                 key = {
                   `prediction-${i}`
