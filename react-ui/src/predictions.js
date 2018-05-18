@@ -54,9 +54,7 @@ class Predictions extends Component {
               let color = '#fff';
               if (probability < .5) color = '#777';
               return ( < div className = 'prediction'
-                onClick = {
-                  this.handleClick.bind(this, minX)
-                }
+                onClick = {this.handleClick.bind(this, minX)}
                 key = {
                   `prediction-${i}`
                 }
