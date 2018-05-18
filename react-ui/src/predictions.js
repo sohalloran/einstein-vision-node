@@ -12,7 +12,7 @@ class Predictions extends Component {
     // The Predictive Vision Predictions
     contents: React.PropTypes.array.isRequired
   }
-  hightlight: function (minX, minY, maxX, maxY) {
+  hightlight(minX, minY, maxX, maxY) {
     console.log(minX, minY, maxX, maxY);
   }
   render() {
