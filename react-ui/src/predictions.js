@@ -12,8 +12,8 @@ class Predictions extends Component {
     // The Predictive Vision Predictions
     contents: React.PropTypes.array.isRequired
   }
-  handleClick(minX) {
-    alert(minX);
+  handleClick() {
+    alert(this);
   }
   render() {
     const contents = this.props.contents;
@@ -55,7 +55,7 @@ class Predictions extends Component {
               if (probability < .5) color = '#777';
               return ( < div className = 'prediction'
                 onClick = {
-                  this.handleClick.bind(null, minX)
+                  this.handleClick.bind(this, minX)
                 }
                 key = {
                   `prediction-${i}`
