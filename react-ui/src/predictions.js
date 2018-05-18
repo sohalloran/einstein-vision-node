@@ -12,16 +12,13 @@ class Predictions extends Component {
     // The Predictive Vision Predictions
     contents: React.PropTypes.array.isRequired
   }
-  handleClick(id, e) {
-    alert(id);
+  handleClick: function (minX) {
+    alert(minX);
   }
   render() {
     const contents = this.props.contents;
     if (contents == null || contents.length === 0) {
       return <div className = "empty" / > ;
-    }
-    handleClick: function (minX) {
-      alert(minX);
     }
     return ( < StaggeredMotion defaultStyles = {
         contents.map(p => ({
