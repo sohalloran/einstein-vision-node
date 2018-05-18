@@ -12,7 +12,7 @@ class Predictions extends Component {
     // The Predictive Vision Predictions
     contents: React.PropTypes.array.isRequired
   }
-  highlight = (minX, minY, maxX, maxY, e) => {
+  highlight(minX, minY, maxX, maxY, e) = {
     console.log(minX, minY, maxX, maxY);
   }
   render() {
@@ -40,21 +40,21 @@ class Predictions extends Component {
         <
         div className = "predictions" > {
           interpolatingStyles.map((style, i) => {
-            const prediction = contents[i];
-            if (prediction == null) {
-              return null;
-            }
-            const probability = prediction.probability;
-            const percent = Math.round(probability * 100);
-            const labels = prediction.label.split(/,\s*/);
-            const boundingBox = prediction.boundingBox;
-            const minX = boundingBox.minX;
-            const minY = boundingBox.minY;
-            const maxX = boundingBox.maxX;
-            const maxY = boundingBox.maxY;
-            let color = '#fff';
-            if (probability < .5) color = '#777';
-            return ( < div onClick = {
+              const prediction = contents[i];
+              if (prediction == null) {
+                return null;
+              }
+              const probability = prediction.probability;
+              const percent = Math.round(probability * 100);
+              const labels = prediction.label.split(/,\s*/);
+              const boundingBox = prediction.boundingBox;
+              const minX = boundingBox.minX;
+              const minY = boundingBox.minY;
+              const maxX = boundingBox.maxX;
+              const maxY = boundingBox.maxY;
+              let color = '#fff';
+              if (probability < .5) color = '#777';
+              return ( < div onClick = {
                   (e) => this.highlight(minX, minY, maxX, maxY, e)
                 }
                 className = 'prediction'
@@ -81,26 +81,26 @@ class Predictions extends Component {
                 }) < span className = "probability"
                 title = "Probability" > {
                   percent
-                } % < /span> <
-                /h2 > {
-                labels[1] != null ?
+                } % < /span> < /
+                h2 > {
+                  labels[1] != null ?
+                  <
+                  p className = "alt-labels" > {
+                    labels.slice(1, labels.length).join(', ')
+                  } < /p> :
+                  null
+                }
+
                 <
-                p className = "alt-labels" > {
-                  labels.slice(1, labels.length).join(', ')
-                } < /p> :
-                null
-              }
-
-              <
-              /div>);
-          })
+                /div>);
+              })
+          } <
+          /div>
         } <
-        /div>
-      } <
-      /StaggeredMotion>
+        /StaggeredMotion>
 
-    );
+      );
+    }
   }
-}
 
-export default Predictions;
+  export default Predictions;
