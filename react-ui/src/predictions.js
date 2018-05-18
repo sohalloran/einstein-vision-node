@@ -37,21 +37,21 @@ class Predictions extends Component {
         <
         div className = "predictions" > {
           interpolatingStyles.map((style, i) => {
-              const prediction = contents[i];
-              if (prediction == null) {
-                return null;
-              }
-              const probability = prediction.probability;
-              const percent = Math.round(probability * 100);
-              const labels = prediction.label.split(/,\s*/);
-              const boundingBox = prediction.boundingBox;
-              const minX = boundingBox.minX;
-              const minY = boundingBox.minY;
-              const maxX = boundingBox.maxX;
-              const maxY = boundingBox.maxY;
-              let color = '#fff';
-              if (probability < .5) color = '#777';
-              return ( < div className = 'prediction'
+            const prediction = contents[i];
+            if (prediction == null) {
+              return null;
+            }
+            const probability = prediction.probability;
+            const percent = Math.round(probability * 100);
+            const labels = prediction.label.split(/,\s*/);
+            const boundingBox = prediction.boundingBox;
+            const minX = boundingBox.minX;
+            const minY = boundingBox.minY;
+            const maxX = boundingBox.maxX;
+            const maxY = boundingBox.maxY;
+            let color = '#fff';
+            if (probability < .5) color = '#777';
+            return ( < div className = 'prediction'
                 key = {
                   `prediction-${i}`
                 }
@@ -75,26 +75,26 @@ class Predictions extends Component {
                 }) < span className = "probability"
                 title = "Probability" > {
                   percent
-                } % < /span></h
-                2 > {
-                  labels[1] != null ?
-                  <
-                  p className = "alt-labels" > {
-                    labels.slice(1, labels.length).join(', ')
-                  } < /p> :
-                  null
-                }
-
+                } % < /span> <
+                /h2> {
+                labels[1] != null ?
                 <
-                /div>);
-              })
-          } <
-          /div>
+                p className = "alt-labels" > {
+                  labels.slice(1, labels.length).join(', ')
+                } < /p> :
+                null
+              }
+
+              <
+              /div>);
+          })
         } <
-        /StaggeredMotion>
+        /div>
+      } <
+      /StaggeredMotion>
 
-      );
-    }
+    );
   }
+}
 
-  export default Predictions;
+export default Predictions;
