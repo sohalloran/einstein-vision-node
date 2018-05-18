@@ -49,7 +49,7 @@ class App extends Component {
         var maxY = (boundingBox.maxY * hRatio) - minY;
         context.beginPath();
         context.rect(minX, minY, maxX, maxY);
-        context.lineWidth = 2;
+        context.lineWidth = 1;
         context.strokeStyle = 'yellow';
         context.stroke();
       }
@@ -61,176 +61,176 @@ class App extends Component {
 
   }
   render() {
-      const file = this.state.files[0];
-      const uploadError = this.state.uploadError;
-      const isProcessing = this.state.isProcessing;
-      const response = this.state.uploadResponse;
-      const predictions = (response && response.probabilities) || [];
+    const file = this.state.files[0];
+    const uploadError = this.state.uploadError;
+    const isProcessing = this.state.isProcessing;
+    const response = this.state.uploadResponse;
+    const predictions = (response && response.probabilities) || [];
 
-      return ( <
-        div >
+    return ( <
+      div >
+      <
+      div className = "title" >
+      <
+      h1 className = "intro" >
+      BAT Einstein Object Detection Demo <
+      div className = "detail" > < /div> < /
+      h1 > <
+      /div> <
+      div className = {
+        classNames(
+          "app",
+          file != null ? "app-with-image" : null)
+      } > {
+        response || isProcessing ? null : < Dropzone
+        accept = {
+          'image/png, image/jpeg'
+        }
+        multiple = {
+          false
+        }
+        onDrop = {
+          this.onDrop
+        }
+        style = {
+          {}
+        }
+        className = {
+          classNames(
+            'dropzone', 'initial-dropzone',
+            file != null ? 'dropzone-dropped' : null
+          )
+        }
+        activeClassName = "dropzone-active"
+        rejectClassName = "dropzone-reject" >
         <
-        div className = "title" >
+        UploadTarget / >
         <
-        h1 className = "intro" >
-        BAT Einstein Object Detection Demo <
-        div className = "detail" > < /div> <
-        /h1> <
-        /div> <
+        /Dropzone>}
+
+
+        <
+        Dropzone
+        accept = {
+          'image/png, image/jpeg'
+        }
+        multiple = {
+          false
+        }
+        onDrop = {
+          this.onDrop
+        }
+        style = {
+          {}
+        }
+        className = {
+          classNames(
+            'dropzone',
+            file != null ? 'dropzone-dropped' : null
+          )
+        }
+        activeClassName = "dropzone-active"
+        rejectClassName = "dropzone-reject" >
+        <
+        div className = "result-wrapper" >
+
+        <
         div className = {
           classNames(
-            "app",
-            file != null ? "app-with-image" : null)
-        } > {
-          response || isProcessing ? null : < Dropzone
-          accept = {
-            'image/png, image/jpeg'
-          }
-          multiple = {
-            false
-          }
-          onDrop = {
-            this.onDrop
+            'image-preview',
+            file != null ? 'image-preview-visible' : null)
+        } >
+
+        {
+          isProcessing || response ? < img ref = "img"
+          id = "my-image"
+          alt = "Upload preview"
+          src = {
+            file && file.preview
           }
           style = {
-            {}
-          }
-          className = {
-            classNames(
-              'dropzone', 'initial-dropzone',
-              file != null ? 'dropzone-dropped' : null
-            )
-          }
-          activeClassName = "dropzone-active"
-          rejectClassName = "dropzone-reject" >
-          <
-          UploadTarget / >
-          <
-          /Dropzone>}
-
-
-          <
-          Dropzone
-          accept = {
-            'image/png, image/jpeg'
-          }
-          multiple = {
-            false
-          }
-          onDrop = {
-            this.onDrop
-          }
-          style = {
-            {}
-          }
-          className = {
-            classNames(
-              'dropzone',
-              file != null ? 'dropzone-dropped' : null
-            )
-          }
-          activeClassName = "dropzone-active"
-          rejectClassName = "dropzone-reject" >
-          <
-          div className = "result-wrapper" >
-
-          <
-          div className = {
-            classNames(
-              'image-preview',
-              file != null ? 'image-preview-visible' : null)
-          } >
-
-          {
-            isProcessing || response ? < img ref = "img"
-            id = "my-image"
-            alt = "Upload preview"
-            src = {
-              file && file.preview
+            {
+              display: 'block'
             }
-            style = {
-              {
-                display: 'block'
-              }
-            }
-            /> : null} {
-              !response || isProcessing ? null :
-                <
-                div className = "prompt" > Drop or tap to upload another. < /div>
-            } <
-            div className = "spinner-wrapper" > {
-              isProcessing ?
-              < span > < Spinner / > < div className = "spinner-text" > Analyzing Image... < /div></span >
-              :
-                null
-            } {
-              uploadError
-                ?
-                uploadError :
-                null
-            } <
-            /div> <
-            canvas ref = "canvas"
-            width = "400px"
-            height = "400px" / >
-            <
-            /div>
+          }
+          /> : null} {!response || isProcessing ? null : <
+          div className = "prompt" > Drop or tap to upload another. < /div>
+        } <
+        div className = "spinner-wrapper" > {
+          isProcessing ?
+          <
+          span > < Spinner / > < div className = "spinner-text" > Analyzing Image... < /div></span >
+          :
+            null
+        } {
+          uploadError
+            ?
+            uploadError :
+            null
+        } <
+        /div> <
+        canvas ref = "canvas"
+        width = "400px"
+        height = "400px" / >
+        <
+        /div>
 
-            <
-            Predictions contents = {
-              predictions
-            }
-            /> <
-            /div> <
-            /Dropzone>
+        <
+        /
+        div > <
+        /Dropzone>
 
-            <
-            /div>
-
-            <
-            div className = "footer" >
-            <
-            a href = "https://github.com/heroku/einstein-vision-node" > GitHub < /a> <
-            a href = "https://metamind.readme.io/v1/docs" > API Docs < /a> <
-            /div> <
-            /div>
-          );
+        <
+        Predictions contents = {
+          predictions
         }
+        /> <
+        /div>
 
-        onDrop = (acceptedFiles, rejectedFiles) => {
-          if (acceptedFiles.length) {
+        <
+        div className = "footer" >
+        <
+        a href = "https://github.com/heroku/einstein-vision-node" > GitHub < /a> <
+        a href = "https://metamind.readme.io/v1/docs" > API Docs < /a> < /
+        div > <
+        /div>
+      );
+    }
+
+    onDrop = (acceptedFiles, rejectedFiles) => {
+      if (acceptedFiles.length) {
+        this.setState({
+          isProcessing: true,
+          files: acceptedFiles,
+          uploadError: null,
+          uploadResponse: null
+        });
+
+        var req = superagent.post('/file-upload');
+        acceptedFiles.forEach((file) => {
+          // Backend expects 'file' reference
+          req.attach('file', file, file.name);
+        });
+        req.end((err, res) => {
+          this.setState({
+            isProcessing: false
+          });
+          if (err) {
+            console.log('file-upload error', err);
             this.setState({
-              isProcessing: true,
-              files: acceptedFiles,
-              uploadError: null,
-              uploadResponse: null
+              uploadError: err.message
             });
-
-            var req = superagent.post('/file-upload');
-            acceptedFiles.forEach((file) => {
-              // Backend expects 'file' reference
-              req.attach('file', file, file.name);
-            });
-            req.end((err, res) => {
-              this.setState({
-                isProcessing: false
-              });
-              if (err) {
-                console.log('file-upload error', err);
-                this.setState({
-                  uploadError: err.message
-                });
-                return;
-              }
-              console.log('file-upload response', res);
-
-              this.setState({
-                uploadResponse: JSON.parse(res.text)
-              });
-              this.updateCanvas();
-            });
+            return;
           }
-        }
-      }
+          console.log('file-upload response', res);
 
-      export default App;
+          this.setState({
+            uploadResponse: JSON.parse(res.text)
+          });
+          this.updateCanvas();
+        });
+      }
+    }
+  }
+
+  export default App;
