@@ -12,7 +12,7 @@ class Predictions extends Component {
     // The Predictive Vision Predictions
     contents: React.PropTypes.array.isRequired
   }
-  handleClick = function (id, e) {
+  handleClick(id, e) {
     alert(id);
   }
   render() {
