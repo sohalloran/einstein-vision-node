@@ -36,10 +36,10 @@ class App extends Component {
       let hRatio = 900 / img.height;
       for (let i = 0; i < predictions.length; i++) {
         let boundingBox = predictions[i].boundingBox;
-        let minX = boundingBox.minX * wRatio;
-        let minY = boundingBox.minY * hRatio;
-        let maxX = (boundingBox.maxX - boundingBox.minX) * wRatio;
-        let maxY = (boundingBox.maxY - boundingBox.minY) * hRatio;
+        let minX = Math.round(boundingBox.minX * wRatio);
+        let minY = Math.round(boundingBox.minY * hRatio);
+        let maxX = Math.round((boundingBox.maxX - boundingBox.minX) * wRatio);
+        let maxY = Math.round((boundingBox.maxY - boundingBox.minY) * hRatio);
         context.beginPath();
         context.rect(minX, minY, maxX, maxY);
         context.lineWidth = 1;
