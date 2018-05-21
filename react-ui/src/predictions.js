@@ -5,7 +5,11 @@ import { StaggeredMotion, spring } from 'react-motion';
 class Predictions extends Component {
   static propTypes = {
     // The Predictive Vision Predictions
-    contents: React.PropTypes.array.isRequired
+    contents: React.PropTypes.array.isRequired,
+    files: []
+  }
+  onClick = (minX,minY,maxX,maxY) => {
+    this.props.action(minX,minY,maxX,maxY);
   }
   render() {
     const contents = this.props.contents;
@@ -42,11 +46,13 @@ class Predictions extends Component {
             return (<div 
               className='prediction'
               key={`prediction-${i}`}
+              //onClick={this.props.action}
+              onClick={this.onClick.bind(this, minX, minY, maxX, maxY)}
               style={Object.assign(style, {
                 color: color,
                 backgroundColor: `rgba(0,119,187,${probability})`
               })}>
-              <h2>{labels[0]} ({minX},{minY}),({maxX},{maxY}) <span className="probability" title="Probability">{percent}%</span></h2>
+              <h2>{labels[0]} ({minX},{minY})({maxX},{maxY}) <span className="probability" title="Probability">{percent}%</span></h2>
               {labels[1] != null
                 ? <p className="alt-labels">{labels.slice(1, labels.length).join(', ')}</p>
                 : null}

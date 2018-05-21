@@ -4,64 +4,61 @@ import React, {
 import Dropzone from 'react-dropzone';
 import classNames from 'classnames';
 import superagent from 'superagent';
-import Fabric from 'fabric';
 
 import './app.css';
 import Spinner from './spinner';
 import Predictions from './predictions';
 import UploadTarget from './upload-target';
-import CanvasComponent from './CanvasComponent';
 
 class App extends Component {
-
+  
   state = {
     files: [],
     isProcessing: false,
     uploadError: null,
-    uploadResponse: null
+    uploadResponse: null,
+    wRatio: 0,
+    hRatio: 0
   }
   updateCanvas() {
     const response = this.state.uploadResponse;
     const predictions = response.probabilities;
 
-    var img = new Image();
+    let img = new Image();
     const file = this.state.files[0];
-
     const context = this.refs.canvas.getContext('2d');
-    //this.refs.canvas.width = window.innerWidth;
-    //this.refs.canvas.height = window.innerHeight;
-    //context.drawImage(img, 0, 0); 
-    var height = window.innerHeight;
-    var ratio = this.refs.canvas.width / this.refs.canvas.height;
-    var width = height * ratio;
-    //this.refs.canvas.style.width = width+'px';
-    //this.refs.canvas.style.height = height+'px';
-
-    img.onload = function () {
-      context.drawImage(img, 0, 0, img.width, img.height, 0, 0, width, height);
-      var wRatio = width / img.width;
-      var hRatio = height / img.height;
-      for (var i = 0; i < predictions.length; i++) {
-        var boundingBox = predictions[i].boundingBox;
-        var minX = boundingBox.minX * wRatio;
-        var minY = boundingBox.minY * hRatio;
-        var maxX = (boundingBox.maxX * wRatio) - minX;
-        var maxY = (boundingBox.maxY * hRatio) - minY;
+    let height = 900;
+    let width = 900;
+    
+    img.onload = () => {
+      context.drawImage(img, 0, 0, img.width, img.height, 0, 0, 900, 900);
+      let wRatio = 900 / img.width;
+      let hRatio = 900 / img.height;
+      for (let i = 0; i < predictions.length; i++) {
+        let boundingBox = predictions[i].boundingBox;
+        let minX = boundingBox.minX * wRatio;
+        let minY = boundingBox.minY * hRatio;
+        let maxX = (boundingBox.maxX - boundingBox.minX) * wRatio;
+        let maxY = (boundingBox.maxY - boundingBox.minY) * hRatio;
         context.beginPath();
         context.rect(minX, minY, maxX, maxY);
         context.lineWidth = 1;
         context.strokeStyle = 'yellow';
         context.stroke();
+        context.font = "10px Arial";
+        context.fillStyle = 'yellow';
+        context.fillText(Math.round(predictions[i].probability * 100)+'%',minX, minY);
       }
+      this.setState({
+        wRatio:wRatio,
+        hRatio:hRatio
+      });
     };
-
-    img.src = file && file.preview;
-    //context.drawImage(img, 0, 0, img.width, img.height, 0, 0, this.refs.canvas.width, this.refs.canvas.height);
-
-
-  }
+    img.src = file && file.preview;  
+  }  
   render() {
     const file = this.state.files[0];
+    const files = this.state.files;
     const uploadError = this.state.uploadError;
     const isProcessing = this.state.isProcessing;
     const response = this.state.uploadResponse;
@@ -159,7 +156,7 @@ class App extends Component {
         div className = "spinner-wrapper" > {
           isProcessing ?
           <
-          span > < Spinner / > < div className = "spinner-text" > Analyzing Image... < /div></span >
+          span > < Spinner / > < div className = "spinner-text" > Analysing Image... < /div></span >
           :
             null
         } {
@@ -169,9 +166,9 @@ class App extends Component {
             null
         } <
         /div> <
-        canvas ref = "canvas"
-        width = "400px"
-        height = "400px" / >
+        canvas id="canvas" ref = "canvas"
+        width = "900px"
+        height = "900px" / >
         <
         /div>
 
@@ -181,7 +178,9 @@ class App extends Component {
         /Dropzone>
 
         <
-        Predictions contents = {
+        Predictions 
+        action={this.handler}
+        files = {files} contents = {
           predictions
         }
         /> <
@@ -197,6 +196,20 @@ class App extends Component {
       );
     }
 
+    handler = (x,y,mX,mY) => {   
+      let context = this.refs.canvas.getContext('2d');
+      let wRatio = this.state.wRatio;
+      let hRatio = this.state.hRatio;
+      let minX = x * wRatio;
+      let minY = y * hRatio;
+      let maxX = (mX - x) * wRatio;
+      let maxY = (mY - y) * hRatio;    
+      context.beginPath();
+      context.rect(minX, minY, maxX, maxY);
+      context.lineWidth = 2;  
+      context.strokeStyle = 'red';
+      context.stroke();       
+    }
     onDrop = (acceptedFiles, rejectedFiles) => {
       if (acceptedFiles.length) {
         this.setState({
