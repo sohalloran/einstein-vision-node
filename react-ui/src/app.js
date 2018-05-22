@@ -12,6 +12,7 @@ import Spinner from './spinner';
 import Predictions from './predictions';
 import UploadTarget from './upload-target';
 import LeafletMap from './leafletMap';
+import { isNull, isUndefined } from 'util';
 
 class App extends Component {
   
@@ -27,6 +28,7 @@ class App extends Component {
     allMetaData: '',
     zoom: 13
   }
+          
   updateCanvas() {
     const response = this.state.uploadResponse;
     const predictions = response.probabilities;
@@ -37,30 +39,71 @@ class App extends Component {
     let height = 900;
     let width = 900;
     
+    img.src = file && file.preview; 
     img.onload = () => {
-      context.drawImage(img, 0, 0, img.width, img.height, 0, 0, 900, 900);
-      let wRatio = 900 / img.width;
-      let hRatio = 900 / img.height;
-      for (let i = 0; i < predictions.length; i++) {
-        let boundingBox = predictions[i].boundingBox;
-        let minX = Math.round(boundingBox.minX * wRatio);
-        let minY = Math.round(boundingBox.minY * hRatio);
-        let maxX = Math.round((boundingBox.maxX - boundingBox.minX) * wRatio);
-        let maxY = Math.round((boundingBox.maxY - boundingBox.minY) * hRatio);
-        context.beginPath();
-        context.rect(minX, minY, maxX, maxY);
-        context.lineWidth = 1;
-        context.strokeStyle = 'yellow';
-        context.stroke();
-        context.font = "10px Arial";
-        context.fillStyle = 'yellow';
-        context.fillText(Math.round(predictions[i].probability * 100)+'%',minX, minY);
-      }
-      this.setState({
-        wRatio:wRatio,
-        hRatio:hRatio
+      
+      EXIF.getData(img, () => {
+        var toDecimal = function (number) {
+          if (isNull(number) || isUndefined(number)) return 0;
+          return number[0].numerator + number[1].numerator /
+              (60 * number[1].denominator) + number[2].numerator / (3600 * number[2].denominator);
+        };
+        var allMetaData = EXIF.getAllTags(img);
+        console.log(allMetaData);
+        var orientation = EXIF.getTag(img, "Orientation");
+        var lng = toDecimal(EXIF.getTag(img, 'GPSLongitude'));
+        var lat = toDecimal(EXIF.getTag(img, 'GPSLatitude'));
+        this.setState({
+          lat:lat,
+          lng:lng,
+          allMetaData:JSON.stringify(allMetaData, null, 2)
+        });
+        
+        switch (orientation) {
+          case 2: context.transform(-1, 0, 0, 1, width, 0); break;
+          case 3: context.transform(-1, 0, 0, -1, width, height ); break;
+          case 4: context.transform(1, 0, 0, -1, 0, height ); break;
+          case 5: context.transform(0, 1, 1, 0, 0, 0); break;
+          case 6: context.transform(0, 1, -1, 0, height , 0); break;
+          case 7: context.transform(0, -1, -1, 0, height , width); break;
+          case 8: context.transform(0, -1, 1, 0, 0, width); break;
+          default: break;
+        }
+
+        context.drawImage(img, 0, 0, img.width, img.height, 0, 0, 900, 900);
+
+        let wRatio = width / img.width;
+        let hRatio = height / img.height;
+        switch (orientation) {
+          case 6: context.transform(0, -1, 1, 0, 0, width); break;
+        }
+        for (let i = 0; i < predictions.length; i++) {
+          let boundingBox = predictions[i].boundingBox;
+          let minX = Math.round(boundingBox.minX * wRatio);
+          let minY = Math.round(boundingBox.minY * hRatio);
+          let maxX = Math.round((boundingBox.maxX - boundingBox.minX) * wRatio);
+          let maxY = Math.round((boundingBox.maxY - boundingBox.minY) * hRatio);
+          context.beginPath();
+          context.rect(minX, minY, maxX, maxY);
+          context.lineWidth = 1;
+          context.strokeStyle = 'yellow';
+          context.stroke();
+          context.font = "10px Arial";
+          context.fillStyle = 'yellow';
+          context.fillText(Math.round(predictions[i].probability * 100)+'%',minX, minY);
+        }
+
+        this.setState({
+          wRatio:wRatio,
+          hRatio:hRatio
+        });        
+
+
       });
 
+
+
+      /*
       EXIF.getData(img, () => {
         var allMetaData = EXIF.getAllTags(img);
         console.log(allMetaData);
@@ -73,11 +116,12 @@ class App extends Component {
         });
       });
       var toDecimal = function (number) {
+        if (isNull(number)) return 0;
         return number[0].numerator + number[1].numerator /
             (60 * number[1].denominator) + number[2].numerator / (3600 * number[2].denominator);
-      };
+      };*/
     };
-    img.src = file && file.preview;  
+     
   }  
   render() {
     const file = this.state.files[0];
