@@ -5,8 +5,7 @@ import { StaggeredMotion, spring } from 'react-motion';
 class Predictions extends Component {
   static propTypes = {
     // The Predictive Vision Predictions
-    contents: React.PropTypes.array.isRequired,
-    files: []
+    contents: React.PropTypes.array.isRequired
   }
   onClick = (minX,minY,maxX,maxY) => {
     this.props.action(minX,minY,maxX,maxY);
@@ -16,8 +15,26 @@ class Predictions extends Component {
     if (contents == null || contents.length === 0) {
       return <div className="empty"/>;
     }
-
-    return (<StaggeredMotion
+    
+    let gMinX = 100000;
+    let gMinY = 100000;
+    let gMaxX = 0;
+    let gMaxY = 0;   
+    let boundedArea =  0;
+    let totalArea = 0;
+    let percentArea = 0;
+    for(let i=0;i<contents.length;i++) {
+      let box = contents[i].boundingBox;
+      boundedArea += (box.maxX - box.minX) * (box.maxY - box.minY);
+      gMinX = box.minX < gMinX ? box.minX : gMinX;
+      gMinY = box.minY < gMinY ? box.minY : gMinY;
+      gMaxX = box.minX > gMaxX ? box.maxX : gMaxX;
+      gMaxY = box.minY > gMaxY ? box.maxY : gMaxY;
+    }
+    totalArea = (gMaxX - gMinX) * (gMaxY - gMinY);
+    percentArea = Math.round(boundedArea / totalArea * 100);
+    percentArea = percentArea>100 ? 100 : percentArea;
+    return (<div><div>Estimated Percent of Display: {percentArea} %</div><StaggeredMotion
       defaultStyles={contents.map( p => ({maxHeight: 0}))}
       styles={prevInterpolatedStyles => 
         prevInterpolatedStyles.map((_, i) =>
@@ -61,7 +78,7 @@ class Predictions extends Component {
           })}
         </div>
       }
-    </StaggeredMotion>
+    </StaggeredMotion></div>
     
     );
   }

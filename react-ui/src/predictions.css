@@ -6,11 +6,11 @@
 
 .predictions .prediction {
   overflow: hidden;
-  margin: 1rem 2rem;
+  margin: 1rem 1rem;
   padding: 0.1rem 1rem;
   color: #fff;
   background: #000;
-  border-radius: 2px;
+  border-radius: 1px;
   text-align: left;
 }
 
@@ -20,5 +20,5 @@
 }
 
 .predictions .prediction .alt-labels {
-  font-size: 0.8rem;
+  font-size: 0.3rem;
 }

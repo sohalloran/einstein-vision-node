@@ -4,11 +4,14 @@ import React, {
 import Dropzone from 'react-dropzone';
 import classNames from 'classnames';
 import superagent from 'superagent';
+import EXIF from 'exif-js';
+import Leaflet from 'leaflet'
 
 import './app.css';
 import Spinner from './spinner';
 import Predictions from './predictions';
 import UploadTarget from './upload-target';
+import LeafletMap from './leafletMap';
 
 class App extends Component {
   
@@ -18,7 +21,11 @@ class App extends Component {
     uploadError: null,
     uploadResponse: null,
     wRatio: 0,
-    hRatio: 0
+    hRatio: 0,
+    lat: 0,
+    lng: 0,
+    allMetaData: '',
+    zoom: 13
   }
   updateCanvas() {
     const response = this.state.uploadResponse;
@@ -53,6 +60,22 @@ class App extends Component {
         wRatio:wRatio,
         hRatio:hRatio
       });
+
+      EXIF.getData(img, () => {
+        var allMetaData = EXIF.getAllTags(img);
+        console.log(allMetaData);
+        var lng = toDecimal(EXIF.getTag(img, 'GPSLongitude'));
+        var lat = toDecimal(EXIF.getTag(img, 'GPSLatitude'));
+        this.setState({
+          lat:lat,
+          lng:lng,
+          allMetaData:JSON.stringify(allMetaData, null, 2)
+        });
+      });
+      var toDecimal = function (number) {
+        return number[0].numerator + number[1].numerator /
+            (60 * number[1].denominator) + number[2].numerator / (3600 * number[2].denominator);
+      };
     };
     img.src = file && file.preview;  
   }  
@@ -73,7 +96,9 @@ class App extends Component {
       BAT Einstein Object Detection Demo <
       div className = "detail" > < /div> < /
       h1 > <
-      /div> <
+      /div> 
+      
+      <
       div className = {
         classNames(
           "app",
@@ -165,17 +190,17 @@ class App extends Component {
             uploadError :
             null
         } <
-        /div> <
-        canvas id="canvas" ref = "canvas"
-        width = "900px"
-        height = "900px" / >
+        /div> 
+        
         <
         /div>
-
+        
         <
         /
-        div > <
-        /Dropzone>
+        div > 
+        
+        <
+        /Dropzone>       
 
         <
         Predictions 
@@ -185,12 +210,24 @@ class App extends Component {
         }
         /> <
         /div>
+        <div className = "canvas">
+        <
+                canvas id="canvas" ref = "canvas" 
+                width = "900px"
+                height = "900px" / >
+        </div>
+        <LeafletMap 
+          lat={this.state.lat} 
+          lng={this.state.lng}
+          zoom={this.state.zoom}
+          allMetaData={this.state.allMetaData}
+        />  
 
         <
         div className = "footer" >
         <
         a href = "https://github.com/heroku/einstein-vision-node" > GitHub < /a> <
-        a href = "https://metamind.readme.io/v1/docs" > API Docs < /a> < /
+        a href = "https://metamind.readme.io/" > API Docs < /a> < /
         div > <
         /div>
       );

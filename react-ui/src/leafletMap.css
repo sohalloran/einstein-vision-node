@@ -1,0 +1,9 @@
+.leaflet {
+    height: 900px;
+    width: 900px;
+    margin: 20px auto;
+    position: relative;
+  }
+ span {
+    color:black;
+ } 
